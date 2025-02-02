@@ -6,7 +6,7 @@ export const addBranch = (req: Request, res: Response): void => {
   const { name, address, phone } = req.body;
 
   if (!name || !address || !phone) {
-    res.status(400).json({ error: "All fields (name, address, phone) are required." });
+    res.status(400).json({ error: "All field (name, address, phone) are required." });
     return;
   }
 
