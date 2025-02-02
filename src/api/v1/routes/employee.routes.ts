@@ -17,7 +17,7 @@ const router: Router = express.Router();
  *   get:
  *     summary: Get all employes
  *     tags: [Employees]
- *     description: Retrieve a list of all employees
+ *     description: Retrieve list of all employees
  *     responses:
  *       200:
  *         description: Successfully retrieved employee list
