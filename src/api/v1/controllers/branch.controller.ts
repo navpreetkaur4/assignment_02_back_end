@@ -80,5 +80,5 @@ export const removeBranch = (req: Request, res: Response): void => {
     return;
   }
 
-  res.status(200).json({ message: "Branch deleted successfully" });
+  res.status(200).json({ message: "Branch is deleted successfully" });
 };
