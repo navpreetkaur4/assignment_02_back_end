@@ -1,34 +1,37 @@
-import swaggerJSDoc from 'swagger-jsdoc';
-import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { Application } from "express";
 
-// Swagger configuration
+// Swagger Configuration
 const swaggerDefinition = {
-  openapi: '3.0.0',
+  openapi: "3.0.0",
   info: {
-    title: 'API Documentation',
-    version: '1.0.0',
-    description: 'API documentation for the Express application',
+    title: "Employee & Branch Management API",
+    version: "1.0.0",
+    description: "API documentation for managing employees and branches",
   },
   servers: [
     {
-      url: `http://localhost:3000`, // change this URL to match your server's URL
+      url: "http://localhost:3000", 
     },
+  ],
+  tags: [
+    { name: "Employees", description: "Operations related to employees" },
+    { name: "Branches", description: "Operations related to branches" },
+    { name: "Health Check", description: "Health check endpoint" },
   ],
 };
 
-// Options for the swagger-jsdoc
+// Options for swagger-jsdoc
 const options = {
   swaggerDefinition,
-  // Path to the API docs
-  apis: ['./src/api/v1/routes/*.ts'], // Will read comments from your route files
+  apis: ["./src/api/v1/routes/*.ts"], 
 };
 
-// Initialize swagger-jsdoc
+// Initialize Swagger Docs
 const swaggerSpec = swaggerJSDoc(options);
 
-// Swagger setup for Express
-const setupSwagger = (app: any) => {
-  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// Function to Setup Swagger in Express App
+export const setupSwagger = (app: Application) => {
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 };
-
-export { setupSwagger };

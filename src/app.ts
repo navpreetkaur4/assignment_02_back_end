@@ -1,22 +1,35 @@
-import express from 'express';
-import morgan from 'morgan';
-import { setupSwagger } from './swagger'; // Import swagger setup
+import express, { Application, Request, Response } from "express";
+import cors from "cors";
+import morgan from "morgan";
+import { setupSwagger } from "./swagger";
+import employeeRoutes from "./api/v1/routes/employee.routes";
+import branchRoutes from "./api/v1/routes/branch.routes";
 
-const app = express();
+const app: Application = express(); 
 
-// Use Morgan for HTTP request logging
-app.use(morgan('combined'));
+// Middleware
+app.use(express.json());
+app.use(cors());
+app.use(morgan("combined"));
 
-// Use Swagger for API documentation
+// Setup Swagger Documentation
 setupSwagger(app);
 
-app.get('/health', (req, res) => {
-  res.send('Server is healthy');
+// API Routes
+app.use("/api/v1/employees", employeeRoutes);
+app.use("/api/v1/branches", branchRoutes);
+
+// Health Check Endpoint
+app.get("/health", (req: Request, res: Response): void => {
+  res.status(200).send("Server is healthy"); 
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Only start the server if `app.ts` is directly executed
+if (require.main === module) {
+  const PORT = 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
 
-export default app;
+export default app; // 

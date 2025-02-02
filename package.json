@@ -20,6 +20,7 @@
   "homepage": "https://github.com/navpreetkaur4/assignment_02_back_end#readme",
   "description": "",
   "devDependencies": {
+    "@types/cors": "^2.8.17",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.0",
     "@types/supertest": "^6.0.2",
@@ -35,6 +36,7 @@
   "dependencies": {
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
+    "cors": "^2.8.5",
     "express": "^4.21.2",
     "morgan": "^1.10.0",
     "swagger-jsdoc": "^6.2.8",
