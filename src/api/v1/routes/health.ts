@@ -6,7 +6,7 @@ const router = express.Router();
  * @swagger
  * /health:
  *   get:
- *     description: Returns health status of the server
+ *     description: Returns the health status of the server
  *     responses:
  *       200:
  *         description: Server is healthy

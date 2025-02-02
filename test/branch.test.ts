@@ -5,7 +5,7 @@ let server: any;
 let branchId: number;
 
 beforeAll(async () => {
-  server = app.listen(3000, () => console.log("Test server running port 3000"));
+  server = app.listen(3000, () => console.log("Test server running on port 3000"));
 });
 
 afterAll(async () => {
@@ -38,7 +38,7 @@ describe("Branch API", () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  it("Should return specific branch", async () => {
+  it("Should return a specific branch", async () => {
     if (!branchId) throw new Error("Branch ID is undefined");
 
     const res = await request(app).get(`/api/v1/branches/${branchId}`);
@@ -46,7 +46,7 @@ describe("Branch API", () => {
     expect(res.body).toHaveProperty("id", branchId);
   });
 
-  it("Should update branch", async () => {
+  it("Should update a branch", async () => {
     if (!branchId) throw new Error("Branch ID is undefined");
 
     const res = await request(app).put(`/api/v1/branches/${branchId}`).send({

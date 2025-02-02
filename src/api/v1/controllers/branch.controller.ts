@@ -6,7 +6,7 @@ export const addBranch = (req: Request, res: Response): void => {
   const { name, address, phone } = req.body;
 
   if (!name || !address || !phone) {
-    res.status(400).json({ error: "All field (name, address, phone) are required." });
+    res.status(400).json({ error: "All fields (name, address, phone) are required." });
     return;
   }
 
@@ -53,7 +53,7 @@ export const modifyBranch = (req: Request, res: Response): void => {
 
   const updates = req.body;
   if (!updates.name && !updates.address && !updates.phone) {
-    res.status(400).json({ error: "At least one fields (name, address, phone) is required." });
+    res.status(400).json({ error: "At least one field (name, address, phone) is required." });
     return;
   }
 
@@ -80,5 +80,5 @@ export const removeBranch = (req: Request, res: Response): void => {
     return;
   }
 
-  res.status(200).json({ message: "Branch is deleted successfully" });
+  res.status(200).json({ message: "Branch deleted successfully" });
 };
