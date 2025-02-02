@@ -38,7 +38,7 @@ describe("Branch API", () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  it("Should return a specific branch", async () => {
+  it("Should return specific branch", async () => {
     if (!branchId) throw new Error("Branch ID is undefined");
 
     const res = await request(app).get(`/api/v1/branches/${branchId}`);
