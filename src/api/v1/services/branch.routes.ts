@@ -13,7 +13,7 @@ const router: Router = express.Router();
  * @swagger
  * tags:
  *   name: Branches
- *   description: Operations related to branch management
+ *   description: Operations related to the branch management
  */
 
 /**
