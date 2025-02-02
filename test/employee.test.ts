@@ -18,12 +18,12 @@ afterAll(async () => {
 });
 
 describe("Employee API", () => {
-  test("Should create a new employee", async () => {
+  test("Should create new employee", async () => {
     const res = await request(app).post("/api/v1/employees").send({
-      name: "John Doe",
+      name: "Navpreet",
       position: "Developer",
       department: "IT",
-      email: "john@example.com",
+      email: "nav@example.com",
       phone: "987-654-3210",
       branchId: 1,
     });
