@@ -46,7 +46,7 @@ describe("Branch API", () => {
     expect(res.body).toHaveProperty("id", branchId);
   });
 
-  it("Should update a branch", async () => {
+  it("Should update branch", async () => {
     if (!branchId) throw new Error("Branch ID is undefined");
 
     const res = await request(app).put(`/api/v1/branches/${branchId}`).send({
