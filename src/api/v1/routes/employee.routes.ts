@@ -15,7 +15,7 @@ const router: Router = express.Router();
  * @swagger
  * /api/v1/employees:
  *   get:
- *     summary: Get all employees
+ *     summary: Get all employes
  *     tags: [Employees]
  *     description: Retrieve a list of all employees
  *     responses:

@@ -42,7 +42,7 @@ export const updateEmployee = (id: number, updates: Partial<Employee>): Employee
   return employees[index];
 };
 
-// Delete an employee
+// Delete a employee
 export const deleteEmployee = (id: number): boolean => {
   const index = employees.findIndex(emp => emp.id === id);
   if (index === -1) return false;
