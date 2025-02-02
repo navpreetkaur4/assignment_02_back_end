@@ -53,7 +53,7 @@ export const modifyBranch = (req: Request, res: Response): void => {
 
   const updates = req.body;
   if (!updates.name && !updates.address && !updates.phone) {
-    res.status(400).json({ error: "At least one field (name, address, phone) is required." });
+    res.status(400).json({ error: "At least one fields (name, address, phone) is required." });
     return;
   }
 
