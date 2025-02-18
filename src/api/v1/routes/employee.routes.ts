@@ -15,12 +15,18 @@ const router: Router = express.Router();
  * @swagger
  * /api/v1/employees:
  *   get:
- *     summary: Get all employees
+ *     summary: Retrieve all employees
  *     tags: [Employees]
- *     description: Retrieve a list of all employees
+ *     description: Retrieve a list of all employees.
  *     responses:
  *       200:
- *         description: Successfully retrieved employee list
+ *         description: Successfully retrieved the employee list.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/Employee"
  */
 router.get("/", getEmployees);
 
@@ -28,7 +34,7 @@ router.get("/", getEmployees);
  * @swagger
  * /api/v1/employees/{id}:
  *   get:
- *     summary: Get an employee by ID
+ *     summary: Retrieve an employee by ID
  *     tags: [Employees]
  *     parameters:
  *       - in: path
@@ -36,12 +42,15 @@ router.get("/", getEmployees);
  *         required: true
  *         schema:
  *           type: integer
- *         description: The employee ID
  *     responses:
  *       200:
- *         description: Successfully retrieved employee
+ *         description: Successfully retrieved the employee.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Employee"
  *       404:
- *         description: Employee not found
+ *         description: Employee not found.
  */
 router.get("/:id", getEmployee);
 
@@ -60,9 +69,15 @@ router.get("/:id", getEmployee);
  *         description: The department name
  *     responses:
  *       200:
- *         description: Employees found
+ *         description: Employees found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/Employee"
  *       404:
- *         description: No employees found
+ *         description: No employees found in this department.
  */
 router.get("/department/:department", getEmployeesByDepartment);
 
@@ -78,12 +93,17 @@ router.get("/department/:department", getEmployeesByDepartment);
  *         required: true
  *         schema:
  *           type: integer
- *         description: The branch ID
  *     responses:
  *       200:
- *         description: Employees found
+ *         description: Employees found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/components/schemas/Employee"
  *       404:
- *         description: No employees found
+ *         description: No employees found in this branch.
  */
 router.get("/branch/:branchId", getEmployeesByBranch);
 
@@ -91,8 +111,21 @@ router.get("/branch/:branchId", getEmployeesByBranch);
  * @swagger
  * /api/v1/employees:
  *   post:
- *     summary: Add a new employee
+ *     summary: Create a new employee
  *     tags: [Employees]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Employee"
+ *     responses:
+ *       201:
+ *         description: Employee created successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Employee"
  */
 router.post("/", addEmployee);
 
@@ -102,6 +135,27 @@ router.post("/", addEmployee);
  *   put:
  *     summary: Update an existing employee
  *     tags: [Employees]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/components/schemas/Employee"
+ *     responses:
+ *       200:
+ *         description: Employee updated successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/components/schemas/Employee"
+ *       404:
+ *         description: Employee not found.
  */
 router.put("/:id", modifyEmployee);
 
@@ -111,6 +165,17 @@ router.put("/:id", modifyEmployee);
  *   delete:
  *     summary: Delete an employee
  *     tags: [Employees]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Employee deleted successfully.
+ *       404:
+ *         description: Employee not found.
  */
 router.delete("/:id", removeEmployee);
 

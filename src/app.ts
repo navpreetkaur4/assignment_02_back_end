@@ -5,12 +5,12 @@ import { setupSwagger } from "./swagger";
 import employeeRoutes from "./api/v1/routes/employee.routes";
 import branchRoutes from "./api/v1/routes/branch.routes";
 
-const app: Application = express(); 
+const app: Application = express();
 
 // Middleware
-app.use(express.json());
-app.use(cors());
-app.use(morgan("combined"));
+app.use(express.json()); 
+app.use(cors()); 
+app.use(morgan("combined")); 
 
 // Setup Swagger Documentation
 setupSwagger(app);
@@ -21,10 +21,10 @@ app.use("/api/v1/branches", branchRoutes);
 
 // Health Check Endpoint
 app.get("/health", (req: Request, res: Response): void => {
-  res.status(200).send("Server is healthy"); 
+  res.status(200).send("Server is healthy");
 });
 
-// Only start the server if `app.ts` is directly executed
+// Start the server only if executed directly
 if (require.main === module) {
   const PORT = 3000;
   app.listen(PORT, () => {
@@ -32,4 +32,4 @@ if (require.main === module) {
   });
 }
 
-export default app; // 
+export default app;

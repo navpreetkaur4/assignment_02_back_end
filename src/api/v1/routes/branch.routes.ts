@@ -1,8 +1,8 @@
 import express, { Router } from "express";
 import {
   addBranch,
-  fetchBranches,
-  fetchBranch,
+  getBranches,
+  getBranch,
   modifyBranch,
   removeBranch,
 } from "../controllers/branch.controller";
@@ -83,7 +83,7 @@ router.post("/", addBranch);
  *                   phone:
  *                     type: string
  */
-router.get("/", fetchBranches);
+router.get("/", getBranches);
 
 /**
  * @swagger
@@ -118,7 +118,7 @@ router.get("/", fetchBranches);
  *       404:
  *         description: Branch not found
  */
-router.get("/:id", fetchBranch);
+router.get("/:id", getBranch);
 
 /**
  * @swagger
