@@ -1,33 +1,20 @@
 import { Request, Response } from "express";
-import { createBranch, getAllBranches, getBranchById, updateBranch, deleteBranch } from "../services/branch.service";
+import {
+  getAllBranches,
+  getBranchById,
+  createBranch,
+  updateBranch,
+  deleteBranch,
+} from "../services/branch.service";
 
-// Create a new branch
-export const addBranch = (req: Request, res: Response): void => {
-  const { name, address, phone } = req.body;
-
-  if (!name || !address || !phone) {
-    res.status(400).json({ error: "All fields (name, address, phone) are required." });
-    return;
-  }
-
-  const newBranch = createBranch({
-    id: Date.now(),
-    name,
-    address,
-    phone,
-  });
-
-  res.status(201).json(newBranch);
-};
-
-// Fetch all branches
-export const fetchBranches = (req: Request, res: Response): void => {
+// Get all branches
+export const getBranches = (req: Request, res: Response): void => {
   const branches = getAllBranches();
   res.status(200).json(branches);
 };
 
-// Fetch a branch by ID
-export const fetchBranch = (req: Request, res: Response): void => {
+// Get a branch by ID
+export const getBranch = (req: Request, res: Response): void => {
   const id = Number(req.params.id);
   if (isNaN(id)) {
     res.status(400).json({ error: "Invalid branch ID" });
@@ -36,14 +23,27 @@ export const fetchBranch = (req: Request, res: Response): void => {
 
   const branch = getBranchById(id);
   if (!branch) {
-    res.status(404).json({ error: "Branch not found" });
+    res.status(404).json({ error: `Branch with ID ${id} not found` });
     return;
   }
 
   res.status(200).json(branch);
 };
 
-// Update branch
+// Add a new branch
+export const addBranch = (req: Request, res: Response): void => {
+  const { name, address, phone } = req.body;
+
+  if (!name || !address || !phone) {
+    res.status(400).json({ error: "All fields are required" });
+    return;
+  }
+
+  const newBranch = createBranch({ name, address, phone });
+  res.status(201).json(newBranch);
+};
+
+// Update an existing branch
 export const modifyBranch = (req: Request, res: Response): void => {
   const id = Number(req.params.id);
   if (isNaN(id)) {
@@ -52,12 +52,8 @@ export const modifyBranch = (req: Request, res: Response): void => {
   }
 
   const updates = req.body;
-  if (!updates.name && !updates.address && !updates.phone) {
-    res.status(400).json({ error: "At least one field (name, address, phone) is required." });
-    return;
-  }
-
   const updatedBranch = updateBranch(id, updates);
+
   if (!updatedBranch) {
     res.status(404).json({ error: "Branch not found" });
     return;
@@ -66,7 +62,7 @@ export const modifyBranch = (req: Request, res: Response): void => {
   res.status(200).json(updatedBranch);
 };
 
-// Delete branch
+// Delete a branch
 export const removeBranch = (req: Request, res: Response): void => {
   const id = Number(req.params.id);
   if (isNaN(id)) {

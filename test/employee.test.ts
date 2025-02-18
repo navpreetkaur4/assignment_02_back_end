@@ -5,15 +5,24 @@ let server: any;
 let employeeId: number;
 
 beforeAll(async () => {
-  server = app.listen(3000, () => console.log("Test server running on port 3000"));
+  if (!server) {
+    server = app.listen(0, () => console.log("Test server running on a random port")); 
+  }
 });
 
 afterAll(async () => {
-  if (server) {
-    await new Promise<void>((resolve) => server.close(() => {
-      console.log("Test server closed");
-      resolve();
-    }));
+  if (server && server.listening) {
+    await new Promise<void>((resolve, reject) => {
+      server.close((err: Error | null) => {
+        if (err) {
+          console.error("Error closing server:", err);
+          reject(err);
+        } else {
+          console.log("Test server closed successfully");
+          resolve();
+        }
+      });
+    });
   }
 });
 

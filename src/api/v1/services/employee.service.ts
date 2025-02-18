@@ -8,7 +8,12 @@ export interface Employee {
   branchId: number;
 }
 
-const employees: Employee[] = [];
+// Preloaded Employee Data
+const employees: Employee[] = [
+  { id: 1, name: "Alice Johnson", position: "Branch Manager", department: "Management", email: "alice.johnson@pixell-river.com", phone: "604-555-0148", branchId: 1 },
+  { id: 2, name: "John Doe", position: "Software Engineer", department: "IT", email: "john.doe@example.com", phone: "9876543210", branchId: 3 },
+  { id: 3, name: "Maria Garcia", position: "Loan Officer", department: "Loans", email: "maria.garcia@pixell-river.com", phone: "204-555-0193", branchId: 3 }
+];
 
 // Get all employees
 export const getAllEmployees = (): Employee[] => employees;
