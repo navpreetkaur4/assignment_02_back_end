@@ -1,11 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const branchController = require('../controllers/branchController');
-const branchSchema = require('../schemas/branchSchema');
-const validate = require('../middleware/validate');
+import Joi from 'joi';
 
-router.post('/', validate(branchSchema), branchController.createBranch);
-router.put('/:id', validate(branchSchema), branchController.updateBranch);
-router.delete('/:id', branchController.deleteBranch); // No validation needed for delete
-
-module.exports = router;
+export const branchSchema = Joi.object({
+    name: Joi.string().min(3).max(50).required(),
+    address: Joi.string().min(10).required(),
+    phone: Joi.string().pattern(/^[0-9]{10}$/).required(),
+});
