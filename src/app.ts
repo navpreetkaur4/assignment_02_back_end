@@ -1,6 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
-import helmet from "helmet"; 
+import helmet from "helmet";
 import morgan from "morgan";
 import dotenv from "dotenv";
 import { setupSwagger } from "./swagger";
@@ -12,11 +12,25 @@ dotenv.config();
 
 const app: Application = express();
 
+// Define allowed origins Trusted Domains
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",")
+  : ["http://localhost:3000"]; 
+
+// Configure CORS
+app.use(
+  cors({
+    origin: allowedOrigins, 
+    methods: ["GET", "POST", "PUT", "DELETE"], 
+    allowedHeaders: ["Content-Type", "Authorization"], 
+    credentials: true, 
+  })
+);
+
 // Middleware
 app.use(express.json()); 
 app.use(helmet()); 
-app.use(cors()); 
-app.use(morgan("combined")); 
+app.use(morgan("combined"));
 
 // Setup Swagger Documentation
 setupSwagger(app);
