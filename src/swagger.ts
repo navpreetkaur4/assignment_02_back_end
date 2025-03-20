@@ -1,6 +1,9 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { Application } from "express";
+import dotenv from "dotenv";
+
+dotenv.config(); 
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -9,7 +12,12 @@ const swaggerDefinition = {
     version: "1.0.0",
     description: "API documentation for managing employees and branches",
   },
-  servers: [{ url: "http://localhost:3000" }],
+  servers: [
+    {
+      url: process.env.SWAGGER_SERVER_URL || "http://localhost:3000",
+      description: "Development Server",
+    },
+  ],
   components: {
     schemas: {
       Employee: {
@@ -37,7 +45,6 @@ const swaggerDefinition = {
       },
     },
   },
-  paths: {}, 
 };
 
 const options = {
@@ -49,4 +56,5 @@ const swaggerSpec = swaggerJSDoc(options);
 
 export const setupSwagger = (app: Application) => {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+  console.log("Swagger documentation available at /api-docs");
 };
