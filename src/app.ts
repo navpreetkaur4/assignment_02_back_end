@@ -1,5 +1,6 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
+import helmet from "helmet"; 
 import morgan from "morgan";
 import dotenv from "dotenv";
 import { setupSwagger } from "./swagger";
@@ -13,6 +14,7 @@ const app: Application = express();
 
 // Middleware
 app.use(express.json()); 
+app.use(helmet()); 
 app.use(cors()); 
 app.use(morgan("combined")); 
 
