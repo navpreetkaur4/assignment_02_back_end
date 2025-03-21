@@ -10,14 +10,7 @@ import {
 const router: Router = express.Router();
 
 /**
- * @swagger
- * tags:
- *   name: Branches
- *   description: Operations related to branch management
- */
-
-/**
- * @swagger
+ * @openapi
  * /api/v1/branches:
  *   post:
  *     summary: Create a new branch
@@ -28,37 +21,21 @@ const router: Router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               address:
- *                 type: string
- *               phone:
- *                 type: string
+ *             $ref: "#/components/schemas/Branch"
  *     responses:
  *       201:
  *         description: Branch successfully created
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                 name:
- *                   type: string
- *                 address:
- *                   type: string
- *                 phone:
- *                   type: string
+ *               $ref: "#/components/schemas/Branch"
  *       400:
  *         description: Invalid request data
  */
 router.post("/", addBranch);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/branches:
  *   get:
  *     summary: Get all branches
@@ -72,21 +49,12 @@ router.post("/", addBranch);
  *             schema:
  *               type: array
  *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: integer
- *                   name:
- *                     type: string
- *                   address:
- *                     type: string
- *                   phone:
- *                     type: string
+ *                 $ref: "#/components/schemas/Branch"
  */
 router.get("/", getBranches);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/branches/{id}:
  *   get:
  *     summary: Get a branch by ID
@@ -105,23 +73,14 @@ router.get("/", getBranches);
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                 name:
- *                   type: string
- *                 address:
- *                   type: string
- *                 phone:
- *                   type: string
+ *               $ref: "#/components/schemas/Branch"
  *       404:
  *         description: Branch not found
  */
 router.get("/:id", getBranch);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/branches/{id}:
  *   put:
  *     summary: Update a branch
@@ -139,30 +98,14 @@ router.get("/:id", getBranch);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               address:
- *                 type: string
- *               phone:
- *                 type: string
+ *             $ref: "#/components/schemas/Branch"
  *     responses:
  *       200:
  *         description: Branch successfully updated
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 id:
- *                   type: integer
- *                 name:
- *                   type: string
- *                 address:
- *                   type: string
- *                 phone:
- *                   type: string
+ *               $ref: "#/components/schemas/Branch"
  *       400:
  *         description: Invalid request data
  *       404:
@@ -171,7 +114,7 @@ router.get("/:id", getBranch);
 router.put("/:id", modifyBranch);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/branches/{id}:
  *   delete:
  *     summary: Delete a branch

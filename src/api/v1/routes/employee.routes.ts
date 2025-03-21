@@ -12,7 +12,7 @@ import {
 const router: Router = express.Router();
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/employees:
  *   get:
  *     summary: Retrieve all employees
@@ -31,7 +31,7 @@ const router: Router = express.Router();
 router.get("/", getEmployees);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/employees/{id}:
  *   get:
  *     summary: Retrieve an employee by ID
@@ -42,6 +42,7 @@ router.get("/", getEmployees);
  *         required: true
  *         schema:
  *           type: integer
+ *         description: Employee ID
  *     responses:
  *       200:
  *         description: Successfully retrieved the employee.
@@ -55,7 +56,7 @@ router.get("/", getEmployees);
 router.get("/:id", getEmployee);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/employees/department/{department}:
  *   get:
  *     summary: Get employees by department
@@ -66,7 +67,7 @@ router.get("/:id", getEmployee);
  *         required: true
  *         schema:
  *           type: string
- *         description: The department name
+ *         description: Department name
  *     responses:
  *       200:
  *         description: Employees found.
@@ -82,7 +83,7 @@ router.get("/:id", getEmployee);
 router.get("/department/:department", getEmployeesByDepartment);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/employees/branch/{branchId}:
  *   get:
  *     summary: Get employees by branch
@@ -93,6 +94,7 @@ router.get("/department/:department", getEmployeesByDepartment);
  *         required: true
  *         schema:
  *           type: integer
+ *         description: Branch ID
  *     responses:
  *       200:
  *         description: Employees found.
@@ -108,7 +110,7 @@ router.get("/department/:department", getEmployeesByDepartment);
 router.get("/branch/:branchId", getEmployeesByBranch);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/employees:
  *   post:
  *     summary: Create a new employee
@@ -130,7 +132,7 @@ router.get("/branch/:branchId", getEmployeesByBranch);
 router.post("/", addEmployee);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/employees/{id}:
  *   put:
  *     summary: Update an existing employee
@@ -141,6 +143,7 @@ router.post("/", addEmployee);
  *         required: true
  *         schema:
  *           type: integer
+ *         description: Employee ID
  *     requestBody:
  *       required: true
  *       content:
@@ -160,7 +163,7 @@ router.post("/", addEmployee);
 router.put("/:id", modifyEmployee);
 
 /**
- * @swagger
+ * @openapi
  * /api/v1/employees/{id}:
  *   delete:
  *     summary: Delete an employee
@@ -171,6 +174,7 @@ router.put("/:id", modifyEmployee);
  *         required: true
  *         schema:
  *           type: integer
+ *         description: Employee ID
  *     responses:
  *       200:
  *         description: Employee deleted successfully.
