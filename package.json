@@ -6,7 +6,8 @@
     "build": "tsc",
     "start": "ts-node src/app.ts",
     "dev": "ts-node-dev src/app.ts",
-    "test": "jest"
+    "test": "jest",
+    "generate-docs": "ts-node scripts/generate-openapi.ts"
   },
   "repository": {
     "type": "git",

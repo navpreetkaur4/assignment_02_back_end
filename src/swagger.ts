@@ -3,7 +3,7 @@ import swaggerUi from "swagger-ui-express";
 import { Application } from "express";
 import dotenv from "dotenv";
 
-dotenv.config(); 
+dotenv.config();
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -52,8 +52,12 @@ const options = {
   apis: ["./src/api/v1/routes/*.ts", "./dist/api/v1/routes/*.js"], 
 };
 
-const swaggerSpec = swaggerJSDoc(options);
+// Declare and export swaggerSpec **once**
+export const swaggerSpec = swaggerJSDoc(options);
 
+/**
+ * Sets up Swagger UI in the Express application.
+ */
 export const setupSwagger = (app: Application) => {
   app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   console.log("Swagger documentation available at /api-docs");

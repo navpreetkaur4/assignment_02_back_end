@@ -1,0 +1,489 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Employee & Branch Management API",
+    "version": "1.0.0",
+    "description": "API documentation for managing employees and branches"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development Server"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Employee": {
+        "type": "object",
+        "required": [
+          "name",
+          "position",
+          "department",
+          "email",
+          "phone",
+          "branchId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "position": {
+            "type": "string",
+            "example": "Software Engineer"
+          },
+          "department": {
+            "type": "string",
+            "example": "IT"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "john.doe@example.com"
+          },
+          "phone": {
+            "type": "string",
+            "example": "9876543210"
+          },
+          "branchId": {
+            "type": "integer",
+            "example": 3
+          }
+        }
+      },
+      "Branch": {
+        "type": "object",
+        "required": [
+          "name",
+          "address",
+          "phone"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "example": "Vancouver Branch"
+          },
+          "address": {
+            "type": "string",
+            "example": "1300 Burrard St, Vancouver, BC, V6Z 2C7"
+          },
+          "phone": {
+            "type": "string",
+            "example": "604-456-0022"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/v1/branches": {
+      "post": {
+        "summary": "Create a new branch",
+        "tags": [
+          "Branches"
+        ],
+        "description": "Adds a new branch to the system",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Branch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Branch successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Branch"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all branches",
+        "tags": [
+          "Branches"
+        ],
+        "description": "Retrieve a list of all branches",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved branch list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Branch"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/branches/{id}": {
+      "get": {
+        "summary": "Get a branch by ID",
+        "tags": [
+          "Branches"
+        ],
+        "description": "Retrieve details of a branch using its ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The branch ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved branch",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Branch"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Branch not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a branch",
+        "tags": [
+          "Branches"
+        ],
+        "description": "Modify details of an existing branch using its ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The branch ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Branch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Branch successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Branch"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request data"
+          },
+          "404": {
+            "description": "Branch not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a branch",
+        "tags": [
+          "Branches"
+        ],
+        "description": "Remove a branch record using its ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The branch ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Branch successfully deleted"
+          },
+          "404": {
+            "description": "Branch not found"
+          }
+        }
+      }
+    },
+    "/api/v1/employees": {
+      "get": {
+        "summary": "Retrieve all employees",
+        "tags": [
+          "Employees"
+        ],
+        "description": "Retrieve a list of all employees.",
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the employee list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new employee",
+        "tags": [
+          "Employees"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Employee created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/employees/{id}": {
+      "get": {
+        "summary": "Retrieve an employee by ID",
+        "tags": [
+          "Employees"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Employee ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved the employee.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Employee not found."
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an existing employee",
+        "tags": [
+          "Employees"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Employee ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Employee"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Employee updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Employee"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Employee not found."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an employee",
+        "tags": [
+          "Employees"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Employee ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employee deleted successfully."
+          },
+          "404": {
+            "description": "Employee not found."
+          }
+        }
+      }
+    },
+    "/api/v1/employees/department/{department}": {
+      "get": {
+        "summary": "Get employees by department",
+        "tags": [
+          "Employees"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "department",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Department name"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employees found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No employees found in this department."
+          }
+        }
+      }
+    },
+    "/api/v1/employees/branch/{branchId}": {
+      "get": {
+        "summary": "Get employees by branch",
+        "tags": [
+          "Employees"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "branchId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Branch ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employees found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Employee"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No employees found in this branch."
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "Returns the health status of the server",
+        "responses": {
+          "200": {
+            "description": "Server is healthy"
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}
