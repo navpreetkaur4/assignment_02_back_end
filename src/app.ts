@@ -7,7 +7,7 @@ import { setupSwagger } from "./swagger";
 import employeeRoutes from "./api/v1/routes/employee.routes";
 import branchRoutes from "./api/v1/routes/branch.routes";
 
-// Load environment variables before using 
+// Load environment variables before using them
 dotenv.config();
 
 const app: Application = express();
