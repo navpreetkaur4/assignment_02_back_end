@@ -52,7 +52,7 @@ const options = {
   apis: ["./src/api/v1/routes/*.ts", "./dist/api/v1/routes/*.js"], 
 };
 
-// Declare and export swaggerSpec **once**
+// Declare and export swaggerSpec 
 export const swaggerSpec = swaggerJSDoc(options);
 
 /**
