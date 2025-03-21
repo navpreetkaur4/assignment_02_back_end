@@ -1,56 +1,80 @@
-**Debugging Analysis**
+# Debugging Analysis
 
-**Scenario 1: Modify Branch Issue**
-- **Breakpoint Location**: branch.controller.ts, line 64
-- **Objective**: Debug why modifying a branch may fail
-- **Debugger Observations**
-- Variable States:
-- id: Captured from req.params.id
-- updates: Retrieved from req.body
-- updatedBranch: Result of updateBranch(id, updates)
+## Scenario 1: Debugging Employee Retrieval by Department
 
-**Call Stack**:
-- modifyBranch → updateBranch → Firestore call
-- Behavior:
-- If updatedBranch is null, the response returns Branch not found (404).
-- If successful, the response returns Branch updated successfully (200).
-**Analysis**
-- The issue might be that the id doesn’t exist in Firestore.
-- Verify if updateBranch correctly handles the update operation.
-- Ensure id is correctly passed and matches an existing branch.
+- **Breakpoint Location:** `employee.controller.ts`, **Line 36**
+- **Objective:** Verify that the correct department employees are being retrieved and that the response is properly formatted.
 
-**Scenario 2: Remove Branch Issue**
-- Breakpoint Location: branch.controller.ts, line 84
-- Objective: Debug why branch deletion might fail
-**Debugger Observations**
-- Variable States:
-- id: Captured from req.params.id
-- success: Result of deleteBranch(id)
+### Debugger Observations
 
-**Call Stack**:
-- removeBranch → deleteBranch → Firestore call
-- Behavior:
-- If success is false, response returns Branch not found (404).
-- If successful, response returns Branch deleted successfully (200).
-**Analysis**
-- The id may not exist in Firestore, leading to a 404.
-- Ensure deleteBranch properly checks if a branch exists before deletion.
-- Add logs to confirm the id is correctly retrieved.
+- **Variable States:**
+  - `department`: Retrieved correctly from req.params.department
+  - `employees`: Contains an array of employees belonging to the specified department
+- **Call Stack:**
+  - getEmployeesByDepartment(req, res) function is triggered.
+  - Calls employee_service.getEmployeesByDepartment(department).
+  - Response is processed and returned to the client.
+- **Behavior:**
+  - If no employees are found, the API returns a 404 error.
+  - If employees are found, they are returned as an array in JSON format.
 
-**Scenario 3: Remove Employee Issue**
-- Breakpoint Location: employee.controller.ts, line 124
-- Objective: Investigate why employee deletion may fail
-**Debugger Observations**
-- Variable States:
-- id: Captured from req.params.id
-- success: Result of deleteEmployee(id)
+### Analysis
 
-**Call Stack**:
-- removeEmployee → deleteEmployee → Firestore call
-- Behavior:
-- If success is false, response returns Employee not found (404).
-- If successful, response returns Employee deleted successfully (200).
-**Analysis**
-- The employee id may not exist in Firestore.
-- Ensure deleteEmployee checks if the employee exists before deletion.
-- Add logging to confirm the id passed matches a valid employee record.
+- The department filter is working as expected.
+- No unexpected behavior was observed.
+- Potential improvement: Implement better error handling for edge cases, such as invalid department names.
+
+---
+
+## Scenario 2: Debugging Employee Update Operation
+
+- **Breakpoint Location:** `employee.controller.ts`, **Line 72**
+- **Objective:** Validate the employee update process and ensure correct data modification.
+
+### Debugger Observations
+
+- **Variable States:**
+  - `id`: Retrieved correctly from req.params.id and converted to a number.
+  - `updates`: Extracted from req.body, containing the updated employee fields.
+  - `updatedEmployee`: Either returns the updated employee or null if the employee is not found.
+- **Call Stack:**
+  - modifyEmployee(req, res) function is triggered.
+  - Calls employee_service.updateEmployee(id, updates).
+  - If the employee is found and updated, the response returns the modified employee data.
+- **Behavior:**
+  - If the provided id is invalid, an error response is returned (400 Bad Request).
+  - If the employee does not exist, a 404 Not Found response is sent.
+  - If the update is successful, the updated employee data is returned.
+
+### Analysis
+
+- The employee update functionality is working correctly.
+- Observed no major issues, but validation should be strengthened for required fields.
+- Potential improvement: Consider adding logging for failed update attempts to track potential issues.
+
+---
+
+## Scenario 3: Debugging Branch Retrieval by ID
+
+- **Breakpoint Location:** `branch.controller.ts`, **Line 12**
+- **Objective:** Ensure that branch retrieval by ID is working correctly and handles errors properly.
+
+### Debugger Observations
+
+- **Variable States:**
+  - `id`: Retrieved from req.params.id and converted to a number.
+  - `branch`: Retrieved from branch_service.getBranchById(id), either returning a branch object or null.
+- **Call Stack:**
+  - getBranch(req, res) function is executed.
+  - Calls branch_service.getBranchById(id).
+  - If the branch exists, its details are returned.
+- **Behavior:**
+  - If the id is not a valid number, a 400 Bad Request response is returned.
+  - If the branch is not found, a 404 Not Found response is sent.
+  - If the branch exists, it is returned in JSON format.
+
+### Analysis
+
+- Branch retrieval by ID is functioning as expected.
+- No unexpected behavior was observed.
+- Potential improvement: Improve error messages to provide more details.
