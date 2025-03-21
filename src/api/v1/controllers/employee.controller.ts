@@ -84,7 +84,7 @@ export const addEmployee = (req: Request, res: Response): void => {
   res.status(201).json(newEmployee);
 };
 
-// Update an existing employee
+// Update an existing employeesS
 export const modifyEmployee = (req: Request, res: Response): void => {
   const id = Number(req.params.id);
   if (isNaN(id)) {
